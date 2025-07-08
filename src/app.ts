@@ -8,6 +8,8 @@ import { RNG } from "./util/RNG";
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.static("public"));
+
 function getColorResponse(): ColorResponse {
   const rng = new RNG();
   const r = rng.generate();

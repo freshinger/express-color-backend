@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body id="body">
+    <script>
+      const fetched = fetch("http://localhost:3001/randomColor");
+      const response = fetched
+        .then((x) => x.json())
+        .then((x) => {
+          document.getElementById("body").style =
+            "background-color: #" + x.hex + ";";
+        });
+    </script>
+  </body>
+</html>
