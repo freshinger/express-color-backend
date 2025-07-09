@@ -3,7 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <style>
+      ul {
+        display: flex;
+        flex-direction: column;
+        list-style-type: none;
+      }
+      li {
+        display: flex;
+        justify-content: space-between;
+        width: 115px;
+      }
+      .box {
+        margin: 0 5px;
+        border-radius: 10px;
+        border-width: 2px;
+        border-style: dashed;
+      }
+      .whitebox {
+        border-color: white;
+      }
+      .blackbox {
+        border-color: black;
+      }
+    </style>
+    <title>Color Generator</title>
   </head>
   <body id="body">
     <script>
@@ -11,9 +35,123 @@
       const response = fetched
         .then((x) => x.json())
         .then((x) => {
-          document.getElementById("body").style =
-            "background-color: #" + x.hex + ";";
+          if (x.hsl.l < 50) {
+            document.getElementById("body").style =
+              "background-color: #" + x.hex + ";color: white;";
+            Array.from(document.getElementsByClassName("box")).forEach(
+              (element) => {
+                element.class = "whitebox";
+              }
+            );
+          } else {
+            document.getElementById("body").style =
+              "background-color: #" + x.hex + ";color: black;";
+            Array.from(document.getElementsByClassName("box")).forEach(
+              (element) => {
+                element.class = "blackbox";
+              }
+            );
+          }
+
+          document.getElementById("r").innerText = x.rgb.r;
+          document.getElementById("g").innerText = x.rgb.g;
+          document.getElementById("b").innerText = x.rgb.b;
+          document.getElementById("h").innerText = x.hsl.h;
+          document.getElementById("s").innerText = x.hsl.s;
+          document.getElementById("l").innerText = x.hsl.l;
+          document.getElementById("hex").innerText = x.hex;
         });
     </script>
+    <div
+      style="
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        flex-direction: column;
+      "
+    >
+      <div style="flex-direction: column">
+        <h1>Current Color</h1>
+        <div>
+          <h2>RGB</h2>
+          <div class="box">
+            <ul>
+              <li>
+                R: <span id="r"></span
+                ><button
+                  onClick="navigator.clipboard.writeText(document.getElementById('r').innerText);"
+                >
+                  Copy
+                </button>
+              </li>
+              <li>
+                G: <span id="g"></span
+                ><button
+                  onClick="navigator.clipboard.writeText(document.getElementById('g').innerText);"
+                >
+                  Copy
+                </button>
+              </li>
+              <li>
+                B: <span id="b"></span
+                ><button
+                  onClick="navigator.clipboard.writeText(document.getElementById('b').innerText);"
+                >
+                  Copy
+                </button>
+              </li>
+            </ul>
+          </div>
+          <h2>HSL</h2>
+          <div class="box">
+            <ul>
+              <li>
+                H: <span id="h"></span
+                ><button
+                  onClick="navigator.clipboard.writeText(document.getElementById('h').innerText);"
+                >
+                  Copy
+                </button>
+              </li>
+              <li>
+                S: <span id="s"></span
+                ><button
+                  onClick="navigator.clipboard.writeText(document.getElementById('s').innerText);"
+                >
+                  Copy
+                </button>
+              </li>
+              <li>
+                L: <span id="l"></span
+                ><button
+                  onClick="navigator.clipboard.writeText(document.getElementById('l').innerText);"
+                >
+                  Copy
+                </button>
+              </li>
+            </ul>
+          </div>
+          <h2>HexCode</h2>
+          <div class="box">
+            <ul>
+              <li>
+                #<span id="hex"></span
+                ><button
+                  onClick="navigator.clipboard.writeText(document.getElementById('hex').innerText);"
+                >
+                  Copy
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <button
+        onClick="window.location.reload()"
+        style="width: 200px; margin-top: 15px"
+      >
+        New Color
+      </button>
+    </div>
   </body>
 </html>
